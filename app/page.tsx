@@ -7,23 +7,25 @@ export default function HomePage() {
   const { ready, authenticated, login, logout, user } = usePrivy();
   const { wallets: solanaWallets, exportWallet: exportSolanaWallet } = useSolanaWallets();
   const [isExporting, setIsExporting] = useState(false);
-  const hasInitialized = useRef(false);
+  const [mounted, setMounted] = useState(false);
+  const loginAttempted = useRef(false);
   
   // Get the Solana wallet address
   const solanaWallet = solanaWallets[0];
   const solanaAddress = solanaWallet?.address;
 
-  // Automatically trigger login ONCE when page loads
+  // Ensure component only renders on client
   useEffect(() => {
-    if (ready && !authenticated && !hasInitialized.current) {
-      hasInitialized.current = true;
-      // Small delay to avoid hydration issues
-      const timer = setTimeout(() => {
-        login();
-      }, 100);
-      return () => clearTimeout(timer);
+    setMounted(true);
+  }, []);
+
+  // Automatically trigger login when page loads (only once)
+  useEffect(() => {
+    if (mounted && ready && !authenticated && !loginAttempted.current) {
+      loginAttempted.current = true;
+      login();
     }
-  }, [ready, authenticated, login]);
+  }, [mounted, ready, authenticated]);
 
   async function handleExportPrivateKey() {
     setIsExporting(true);
@@ -37,10 +39,9 @@ export default function HomePage() {
     }
   }
 
-  if (!ready || !authenticated) {
+  if (!mounted || !ready || !authenticated) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-black">
-      </div>
+      <div className="flex min-h-screen items-center justify-center bg-black" />
     );
   }
 
