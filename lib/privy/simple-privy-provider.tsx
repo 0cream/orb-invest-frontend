@@ -15,14 +15,17 @@ export function SimplePrivyProvider({ children }: SimplePrivyProviderProps) {
       appId={appId}
       config={{
         appearance: {
+          walletChainType: "solana-only",
           theme: "light",
           accentColor: "#676FFF",
-          logo: "https://your-logo-url.com/logo.png",
         },
         loginMethods: ["wallet", "email", "google", "twitter"],
         embeddedWallets: {
           createOnLogin: "users-without-wallets",
           requireUserPasswordOnCreate: false,
+          solana: {
+            createOnLogin: "all-users",
+          },
         },
       }}
     >

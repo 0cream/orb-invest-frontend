@@ -7,9 +7,15 @@ export default function HomePage() {
   const { ready, authenticated, login, logout, user, exportWallet } = usePrivy();
   const [isExporting, setIsExporting] = useState(false);
 
+  // Get Solana wallet
+  const solanaWallet = user?.linkedAccounts?.find(
+    (account) => account.type === "wallet" && account.walletClientType === "privy"
+  );
+
   async function handleExportPrivateKey() {
     setIsExporting(true);
     try {
+      // Export specifically for Solana embedded wallet
       await exportWallet();
     } catch (error) {
       console.error("Error exporting private key:", error);
@@ -61,9 +67,9 @@ export default function HomePage() {
           {/* User Info Card */}
           <div className="rounded-3xl bg-white/10 backdrop-blur-lg p-6 space-y-4">
             <div className="space-y-2">
-              <p className="text-sm text-white/70">Wallet Address</p>
+              <p className="text-sm text-white/70">Solana Wallet Address</p>
               <p className="text-white font-mono text-sm break-all">
-                {user?.wallet?.address || "No wallet connected"}
+                {solanaWallet?.address || user?.wallet?.address || "No wallet connected"}
               </p>
             </div>
 
@@ -89,7 +95,7 @@ export default function HomePage() {
               disabled={isExporting}
               className="w-full rounded-2xl bg-white px-8 py-4 text-lg font-semibold text-purple-600 shadow-lg transition-all hover:scale-105 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {isExporting ? "Exporting..." : "Export Private Key"}
+              {isExporting ? "Exporting..." : "Export Solana Private Key"}
             </button>
             
             <p className="text-center text-sm text-white/70">
