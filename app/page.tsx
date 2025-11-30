@@ -7,18 +7,20 @@ export default function HomePage() {
   const { ready, authenticated, login, logout, user } = usePrivy();
   const { wallets: solanaWallets, exportWallet: exportSolanaWallet } = useSolanaWallets();
   const [isExporting, setIsExporting] = useState(false);
+  const hasInitialized = useRef(false);
   
   // Get the Solana wallet address
   const solanaWallet = solanaWallets[0];
   const solanaAddress = solanaWallet?.address;
 
-  // Automatically trigger login when page loads and user is not authenticated
-  // If user closes modal, it will re-open after a short delay
+  // Automatically trigger login ONCE when page loads
   useEffect(() => {
-    if (ready && !authenticated) {
+    if (ready && !authenticated && !hasInitialized.current) {
+      hasInitialized.current = true;
+      // Small delay to avoid hydration issues
       const timer = setTimeout(() => {
         login();
-      }, 300);
+      }, 100);
       return () => clearTimeout(timer);
     }
   }, [ready, authenticated, login]);
