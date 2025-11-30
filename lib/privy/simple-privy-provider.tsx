@@ -21,12 +21,6 @@ export function SimplePrivyProvider({ children }: SimplePrivyProviderProps) {
           showWalletLoginFirst: false,
         },
         loginMethods: ["email"],
-        legal: {
-          requireUsersAcceptTerms: false,
-        },
-        mfa: {
-          noPromptOnMfaRequired: false,
-        },
         embeddedWallets: {
           createOnLogin: "all-users",
           requireUserPasswordOnCreate: false,
