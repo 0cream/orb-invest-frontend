@@ -16,10 +16,10 @@ export function SimplePrivyProvider({ children }: SimplePrivyProviderProps) {
       config={{
         appearance: {
           walletChainType: "solana-only",
-          theme: "light",
-          accentColor: "#676FFF",
+          theme: "dark",
+          accentColor: "#FF4D3D",
         },
-        loginMethods: ["email", "google", "twitter", "wallet"],
+        loginMethods: ["email"],
         embeddedWallets: {
           createOnLogin: "all-users",
           requireUserPasswordOnCreate: false,
