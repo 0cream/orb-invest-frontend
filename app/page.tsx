@@ -5,15 +5,21 @@ import { useState, useEffect, useRef } from "react";
 
 export default function HomePage() {
   const { ready, authenticated, login, logout, user } = usePrivy();
-  const { exportWallet: exportSolanaWallet } = useSolanaWallets();
+  const { wallets: solanaWallets, exportWallet: exportSolanaWallet } = useSolanaWallets();
   const [isExporting, setIsExporting] = useState(false);
-  const loginTriggered = useRef(false);
+  
+  // Get the Solana wallet address
+  const solanaWallet = solanaWallets[0];
+  const solanaAddress = solanaWallet?.address;
 
   // Automatically trigger login when page loads and user is not authenticated
+  // If user closes modal, it will re-open after a short delay
   useEffect(() => {
-    if (ready && !authenticated && !loginTriggered.current) {
-      loginTriggered.current = true;
-      login();
+    if (ready && !authenticated) {
+      const timer = setTimeout(() => {
+        login();
+      }, 300);
+      return () => clearTimeout(timer);
     }
   }, [ready, authenticated, login]);
 
@@ -32,7 +38,6 @@ export default function HomePage() {
   if (!ready || !authenticated) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-black">
-        <div className="text-[#FF4D3D] text-xl">Loading...</div>
       </div>
     );
   }
@@ -52,7 +57,7 @@ export default function HomePage() {
             <div className="space-y-2">
               <p className="text-sm text-gray-400">Solana Wallet Address</p>
               <p className="text-white font-mono text-sm break-all">
-                {user?.wallet?.address || "No wallet connected"}
+                {solanaAddress || "No wallet connected"}
               </p>
             </div>
 

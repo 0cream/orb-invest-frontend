@@ -18,8 +18,15 @@ export function SimplePrivyProvider({ children }: SimplePrivyProviderProps) {
           walletChainType: "solana-only",
           theme: "dark",
           accentColor: "#FF4D3D",
+          showWalletLoginFirst: false,
         },
         loginMethods: ["email"],
+        legal: {
+          requireUsersAcceptTerms: false,
+        },
+        mfa: {
+          noPromptOnMfaRequired: false,
+        },
         embeddedWallets: {
           createOnLogin: "all-users",
           requireUserPasswordOnCreate: false,
