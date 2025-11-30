@@ -1,17 +1,18 @@
 "use client";
 
-import { usePrivy } from "@privy-io/react-auth";
+import { usePrivy, useSolanaWallets } from "@privy-io/react-auth";
 import { useState } from "react";
 
 export default function HomePage() {
-  const { ready, authenticated, login, logout, user, exportWallet } = usePrivy();
+  const { ready, authenticated, login, logout, user } = usePrivy();
+  const { exportWallet: exportSolanaWallet } = useSolanaWallets();
   const [isExporting, setIsExporting] = useState(false);
 
   async function handleExportPrivateKey() {
     setIsExporting(true);
     try {
-      // Export specifically for Solana embedded wallet
-      await exportWallet();
+      // Export Solana embedded wallet specifically
+      await exportSolanaWallet();
     } catch (error) {
       console.error("Error exporting private key:", error);
     } finally {

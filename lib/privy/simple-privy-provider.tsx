@@ -19,12 +19,15 @@ export function SimplePrivyProvider({ children }: SimplePrivyProviderProps) {
           theme: "light",
           accentColor: "#676FFF",
         },
-        loginMethods: ["wallet", "email", "google", "twitter"],
+        loginMethods: ["email", "google", "twitter", "wallet"],
         embeddedWallets: {
-          createOnLogin: "users-without-wallets",
+          createOnLogin: "all-users",
           requireUserPasswordOnCreate: false,
           solana: {
             createOnLogin: "all-users",
+          },
+          ethereum: {
+            createOnLogin: "off",
           },
         },
       }}
