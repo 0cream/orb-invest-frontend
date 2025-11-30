@@ -7,11 +7,6 @@ export default function HomePage() {
   const { ready, authenticated, login, logout, user, exportWallet } = usePrivy();
   const [isExporting, setIsExporting] = useState(false);
 
-  // Get Solana wallet
-  const solanaWallet = user?.linkedAccounts?.find(
-    (account) => account.type === "wallet" && account.walletClientType === "privy"
-  );
-
   async function handleExportPrivateKey() {
     setIsExporting(true);
     try {
@@ -69,7 +64,7 @@ export default function HomePage() {
             <div className="space-y-2">
               <p className="text-sm text-white/70">Solana Wallet Address</p>
               <p className="text-white font-mono text-sm break-all">
-                {solanaWallet?.address || user?.wallet?.address || "No wallet connected"}
+                {user?.wallet?.address || "No wallet connected"}
               </p>
             </div>
 
