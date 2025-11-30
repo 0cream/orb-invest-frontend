@@ -51,30 +51,30 @@ export default function HomePage() {
         <div className="mx-auto max-w-md space-y-8">
           {/* Header */}
           <div className="space-y-2 text-center">
-            <h1 className="text-3xl font-bold text-white">Your Wallet</h1>
-            <p className="text-gray-400">Securely manage your keys</p>
+            <h1 className="text-3xl font-bold text-black">Your Wallet</h1>
+            <p className="text-black">Securely manage your keys</p>
           </div>
 
           {/* User Info Card */}
-          <div className="rounded-3xl bg-[#1a1a1a] border border-[#FF4D3D]/20 p-6 space-y-4">
+          <div className="rounded-3xl bg-black border border-black p-6 space-y-4">
             <div className="space-y-2">
-              <p className="text-sm text-gray-400">Solana Wallet Address</p>
-              <p className="text-white font-mono text-sm break-all">
+              <p className="text-sm text-black">Solana Wallet Address</p>
+              <p className="text-black font-mono text-sm break-all">
                 {solanaAddress || "No wallet connected"}
               </p>
             </div>
 
             {user?.email && (
-              <div className="space-y-2 pt-4 border-t border-gray-800">
-                <p className="text-sm text-gray-400">Email</p>
-                <p className="text-white">{user.email.address}</p>
+              <div className="space-y-2 pt-4 border-t border-black">
+                <p className="text-sm text-black">Email</p>
+                <p className="text-black">{user.email.address}</p>
               </div>
             )}
 
             {user?.twitter && (
-              <div className="space-y-2 pt-4 border-t border-gray-800">
-                <p className="text-sm text-gray-400">Twitter</p>
-                <p className="text-white">@{user.twitter.username}</p>
+              <div className="space-y-2 pt-4 border-t border-black">
+                <p className="text-sm text-black">Twitter</p>
+                <p className="text-black">@{user.twitter.username}</p>
               </div>
             )}
           </div>
@@ -84,20 +84,20 @@ export default function HomePage() {
             <button
               onClick={handleExportPrivateKey}
               disabled={isExporting}
-              className="w-full rounded-2xl bg-[#FF4D3D] px-8 py-4 text-lg font-semibold text-white shadow-lg transition-all hover:bg-[#ff3d2d] active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full rounded-2xl bg-black px-8 py-4 text-lg font-semibold text-black border-black"
             >
               {isExporting ? "Exporting..." : "Export Solana Private Key"}
             </button>
             
-            <p className="text-center text-sm text-gray-500">
-              ⚠️ Never share your private key with anyone
+            <p className="text-center text-sm text-black">
+              Never share your private key with anyone
             </p>
           </div>
 
           {/* Logout Button */}
           <button
             onClick={logout}
-            className="w-full rounded-2xl bg-[#1a1a1a] border border-gray-800 px-8 py-4 text-lg font-semibold text-white shadow-lg transition-all hover:bg-[#2a2a2a] active:scale-95"
+            className="w-full rounded-2xl bg-black border border-black px-8 py-4 text-lg font-semibold text-black"
           >
             Logout
           </button>
@@ -105,7 +105,7 @@ export default function HomePage() {
       </div>
 
       {/* Footer */}
-      <div className="py-6 text-center text-gray-600 text-sm">
+      <div className="py-6 text-center text-black text-sm">
         <p>Orb Wallet • Powered by Privy</p>
       </div>
     </div>
