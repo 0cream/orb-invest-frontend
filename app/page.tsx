@@ -1,12 +1,19 @@
 "use client";
 
 import { usePrivy, useSolanaWallets } from "@privy-io/react-auth";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function HomePage() {
   const { ready, authenticated, login, logout, user } = usePrivy();
   const { exportWallet: exportSolanaWallet } = useSolanaWallets();
   const [isExporting, setIsExporting] = useState(false);
+
+  // Automatically trigger login when page loads and user is not authenticated
+  useEffect(() => {
+    if (ready && !authenticated) {
+      login();
+    }
+  }, [ready, authenticated, login]);
 
   async function handleExportPrivateKey() {
     setIsExporting(true);
@@ -20,32 +27,10 @@ export default function HomePage() {
     }
   }
 
-  if (!ready) {
+  if (!ready || !authenticated) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-purple-500 to-pink-500">
         <div className="text-white text-xl">Loading...</div>
-      </div>
-    );
-  }
-
-  if (!authenticated) {
-    return (
-      <div className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-br from-purple-500 to-pink-500 px-4">
-        <div className="w-full max-w-md space-y-8 text-center">
-          <div className="space-y-4">
-            <h1 className="text-4xl font-bold text-white">Welcome</h1>
-            <p className="text-lg text-white/90">
-              Connect your wallet to continue
-            </p>
-          </div>
-          
-          <button
-            onClick={login}
-            className="w-full rounded-2xl bg-white px-8 py-4 text-lg font-semibold text-purple-600 shadow-lg transition-all hover:scale-105 active:scale-95"
-          >
-            Connect Wallet
-          </button>
-        </div>
       </div>
     );
   }
